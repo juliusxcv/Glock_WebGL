@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Glock45 Modelviewer</title>
+    <meta charset="utf-8">
+    <meta name="description" content="&lt;model-viewer&gt; template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="./styles.css" rel="stylesheet"/>
+    <style>
+      .HotspotAnnotation {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .HotspotAnnotation.visible {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <model-viewer> HTML element -->
+    <model-viewer src="./assets/glock.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="commerce" poster="./assets/poster.webp" shadow-intensity="1.14" exposure="1" shadow-softness="0" animation-name="Armature|Cinema_4D_Basis|Layer0">
+      <button class="Hotspot" slot="hotspot-1" data-surface="27 0 26221 26174 23622 0.680 0.017 0.303" data-visibility-attribute="visible">
+          <div class="HotspotAnnotation">Glock45 Frame</div>
+      </button><button class="Hotspot" slot="hotspot-2" data-surface="41 0 1036 2849 2851 0.610 0.009 0.381" data-visibility-attribute="visible">
+          <div class="HotspotAnnotation">Slide</div>
+      </button><button class="Hotspot" slot="hotspot-3" data-surface="52 0 111 60 59 0.098 0.052 0.851" data-visibility-attribute="visible">
+          <div class="HotspotAnnotation">Trigger Group</div>
+      </button>
+      <div class="progress-bar hide" slot="progress-bar">
+          <div class="update-bar"></div>
+      </div>
+      <button slot="ar-button" id="ar-button">
+          AR-Modus
+      </button>
+      <div id="ar-prompt">
+          <img src="./assets/ar_hand_prompt.png">
+      </div>
+    </model-viewer>  
+    <script src="script.js"></script>
+    <!-- Loads <model-viewer> for browsers: -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const hotspotButtons = document.querySelectorAll('button.Hotspot');
+        const hotspotAnnotations = document.querySelectorAll('.HotspotAnnotation');
+
+        hotspotAnnotations.forEach(annotation => {
+          annotation.classList.remove('visible');
+        });
+
+        hotspotButtons.forEach(button => {
+          button.addEventListener('mouseenter', function() {
+            const annotation = this.querySelector('.HotspotAnnotation');
+            annotation.classList.add('visible');
+          });
+
+          button.addEventListener('mouseleave', function() {
+            const annotation = this.querySelector('.HotspotAnnotation');
+            if (!annotation.classList.contains('active')) {
+              annotation.classList.remove('visible');
+            }
+          });
+
+          button.addEventListener('click', function() {
+            const annotation = this.querySelector('.HotspotAnnotation');
+            annotation.classList.toggle('active');
+          });
+        });
+      });
+    </script>
+
+<div style="text-align: center;background-color: rgb(0, 0, 0); padding: 20px;">
+  <img id="cc-xr" src="./assets/cc-xr.jpg" alt="Center Image">
+</div>
+    
+    
+  </body>
+</html>

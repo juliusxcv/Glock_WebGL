@@ -1,0 +1,18 @@
+<model-viewer src="glock.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="commerce" poster="poster.webp" shadow-intensity="1.14" exposure="1" shadow-softness="0" animation-name="Armature|Cinema_4D_Basis|Layer0">
+    <button class="Hotspot" slot="hotspot-1" data-surface="54 0 750 790 792 0.687 0.182 0.131" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Trigger Group</div>
+    </button><button class="Hotspot" slot="hotspot-2" data-surface="27 0 26221 26174 23622 0.680 0.017 0.303" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Glock45 Frame</div>
+    </button><button class="Hotspot" slot="hotspot-4" data-surface="41 0 1036 2849 2851 0.610 0.009 0.381" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Slide</div>
+    </button>
+    <div class="progress-bar hide" slot="progress-bar">
+        <div class="update-bar"></div>
+    </div>
+    <button slot="ar-button" id="ar-button">
+        View in your space
+    </button>
+    <div id="ar-prompt">
+        <img src="https://modelviewer.dev/shared-assets/icons/hand.png">
+    </div>
+</model-viewer>
