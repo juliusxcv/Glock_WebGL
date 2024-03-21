@@ -49,11 +49,26 @@
           button.addEventListener('focus', function() {
             const annotation = this.querySelector('.HotspotAnnotation');
             annotation.classList.add('visible');
+            
+            if (this === hotspotButtons[2]) {
+              const modelViewer = document.querySelector('model-viewer');
+              // modelViewer.play({1, 0});
+              modelViewer.currentTime = 0;
+              modelViewer.timeScale = 5;
+              modelViewer.play();
+            }
           });
 
           button.addEventListener('blur', function() {
             const annotation = this.querySelector('.HotspotAnnotation');
             annotation.classList.remove('visible');
+            
+            if (this === hotspotButtons[2]) {
+              const modelViewer = document.querySelector('model-viewer');
+              modelViewer.currentTime = 0;
+              modelViewer.pause();
+
+            }
           });
         });
       });
