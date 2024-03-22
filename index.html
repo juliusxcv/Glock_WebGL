@@ -18,14 +18,34 @@
   </head>
   <body>
     
-
     <!-- <model-viewer> HTML element -->
-    <model-viewer src="./assets/glock.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls disable-tap tone-mapping="commerce" shadow-intensity="1.14" exposure="1" shadow-softness="0" animation-name="Armature|Cinema_4D_Basis|Layer0">
+    <model-viewer 
+      src="./assets/glock.glb" 
+      ar ar-modes="webxr scene-viewer quick-look" 
+      camera-controls 
+      disable-tap 
+      tone-mapping="commerce" 
+      shadow-intensity="1.14" 
+      exposure="1" 
+      shadow-softness="0" 
+      animation-name="Armature|Cinema_4D_Basis|Layer0">
+      
+      <effect-composer render-mode="quality">
+        <outline-effect color="#fff" blend-mode="skip"></outline-effect>
+        <ssao-effect blend-mode="skip"></ssao-effect>
+        <glitch-effect blend-mode="skip"></glitch-effect>
+        <smaa-effect blend-mode="skip"></smaa-effect>
+        <bloom-effect blend-mode="skip"></bloom-effect>
+        <pixelate-effect granularity="5" blend-mode="skip">
+      </effect-composer>
+
       <button class="Hotspot" slot="hotspot-1" data-surface="27 0 26221 26174 23622 0.680 0.017 0.303" data-visibility-attribute="visible">
           <div class="HotspotAnnotation">Glock45 Frame</div>
-      </button><button class="Hotspot" slot="hotspot-2" data-surface="41 0 1036 2849 2851 0.610 0.009 0.381" data-visibility-attribute="visible">
+      </button>
+      <button class="Hotspot" slot="hotspot-2" data-surface="41 0 1036 2849 2851 0.610 0.009 0.381" data-visibility-attribute="visible">
           <div class="HotspotAnnotation">Slide</div>
-      </button><button class="Hotspot" slot="hotspot-3" data-surface="52 0 111 60 59 0.098 0.052 0.851" data-visibility-attribute="visible">
+      </button>
+      <button class="Hotspot" slot="hotspot-3" data-surface="52 0 111 60 59 0.098 0.052 0.851" data-visibility-attribute="visible">
           <div class="HotspotAnnotation">Trigger Group</div>
       </button>
       <div class="progress-bar hide" slot="progress-bar">
@@ -37,11 +57,47 @@
       <div id="ar-prompt">
           <img src="./assets/ar_hand_prompt.png">
       </div>
+
+      <div class="controls">
+        <label for="outline">Outline Effect</label>
+        <input type="checkbox" id="outline">
+        <label for="ssao">SSAO Effect</label>
+        <input type="checkbox" id="ssao">
+        <label for="glitch">Glitch Effect</label>
+        <input type="checkbox" id="glitch">
+        <label for="smaa">SMAA Effect</label>
+        <input type="checkbox" id="smaa">
+        <label for="bloom">Bloom Effect</label>
+        <input type="checkbox" id="bloom">
+        <label for="pixelate">Pixelate Effect</label>
+        <input type="checkbox" id="pixelate">
+        <!-- <label for="colorgrade">Color Grade Effect</label> -->
+        <!-- <input type="checkbox" id="colorgrade" checked> -->
+      </div>
     </model-viewer>  
+
+    <script type="module">
+      const effectsViewer = document.querySelector("model-viewer");
+      const effects = effectsViewer.querySelector("effect-composer").children;
+      const inputs = effectsViewer.querySelectorAll("input");
+    
+      for (let i = 0; i < effects.length; i++) {
+        inputs[i].addEventListener('change', (e) => effects[i].blendMode = e.target.checked ? 'default' : 'skip');
+      }
+    </script>
+
     <script src="script.js"></script>
-    <!-- Loads <model-viewer> for browsers: -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@^0.160.0/build/three.module.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-module.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js"></script>
+    
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const hotspotButtons = document.querySelectorAll('button.Hotspot');
@@ -91,9 +147,9 @@
       });
     </script>
 
-<div style="text-align: center; background-color: rgb(0, 0, 0); padding-top: 10px;">
-  <img id="cc-xr" src="./assets/cc-xr.jpg" alt="Center Image">
-</div>
+    <div style="text-align: center; background-color: rgb(0, 0, 0); padding-top: 10px;">
+      <img id="cc-xr" src="./assets/cc-xr.jpg" alt="Center Image">
+    </div>
     
     
   </body>
