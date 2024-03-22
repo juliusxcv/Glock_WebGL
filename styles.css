@@ -111,13 +111,13 @@ model-viewer {
 }
 
 .controls {
+  margin-top: 20px;
+  margin-left: 20px;
   font-family: Arial, sans-serif;
   color: white;
+  font-size: 12px;
   text-transform: uppercase;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
 }
 
 #cc-xr {
