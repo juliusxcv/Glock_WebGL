@@ -45,22 +45,25 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const hotspotButtons = document.querySelectorAll('button.Hotspot');
-
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    
         hotspotButtons.forEach(button => {
-          button.addEventListener('focus', function() {
+          const startEvent = isIOS ? 'touchstart' : 'focus';
+          const endEvent = isIOS ? 'touchend' : 'blur';
+    
+          button.addEventListener(startEvent, function() {
             const annotation = this.querySelector('.HotspotAnnotation');
             annotation.classList.add('visible');
             
             if (this === hotspotButtons[2]) {
               const modelViewer = document.querySelector('model-viewer');
-              // modelViewer.play({repetitions: 5});
               modelViewer.currentTime = 0;
               modelViewer.timeScale = 5;
               modelViewer.play();
             }
           });
-
-          button.addEventListener('blur', function() {
+    
+          button.addEventListener(endEvent, function() {
             const annotation = this.querySelector('.HotspotAnnotation');
             annotation.classList.remove('visible');
             
@@ -68,7 +71,6 @@
               const modelViewer = document.querySelector('model-viewer');
               modelViewer.currentTime = 0;
               modelViewer.pause();
-
             }
           });
         });
