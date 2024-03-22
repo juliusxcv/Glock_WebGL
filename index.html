@@ -45,29 +45,43 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const hotspotButtons = document.querySelectorAll('button.Hotspot');
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     
-        hotspotButtons.forEach(button => {
-          const startEvent = isIOS ? 'touchstart' : 'focus';
-          const endEvent = isIOS ? 'touchend' : 'blur';
+        hotspotButtons.forEach((button, index) => {
+          button.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent the document click event from being triggered
     
-          button.addEventListener(startEvent, function() {
+            // Hide all annotations and stop all animations
+            hotspotButtons.forEach((otherButton, otherIndex) => {
+              const otherAnnotation = otherButton.querySelector('.HotspotAnnotation');
+              otherAnnotation.classList.remove('visible');
+              
+              if (otherIndex === 2) {
+                const modelViewer = document.querySelector('model-viewer');
+                modelViewer.currentTime = 0;
+                modelViewer.pause();
+              }
+            });
+    
+            // Show annotation and start animation for clicked hotspot
             const annotation = this.querySelector('.HotspotAnnotation');
             annotation.classList.add('visible');
             
-            if (this === hotspotButtons[2]) {
+            if (index === 2) {
               const modelViewer = document.querySelector('model-viewer');
               modelViewer.currentTime = 0;
               modelViewer.timeScale = 5;
               modelViewer.play();
             }
           });
+        });
     
-          button.addEventListener(endEvent, function() {
-            const annotation = this.querySelector('.HotspotAnnotation');
+        // Hide all annotations and stop all animations when the document is clicked
+        document.addEventListener('click', function() {
+          hotspotButtons.forEach((button, index) => {
+            const annotation = button.querySelector('.HotspotAnnotation');
             annotation.classList.remove('visible');
             
-            if (this === hotspotButtons[2]) {
+            if (index === 2) {
               const modelViewer = document.querySelector('model-viewer');
               modelViewer.currentTime = 0;
               modelViewer.pause();
